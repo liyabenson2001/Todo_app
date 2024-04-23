@@ -7,6 +7,7 @@ import  firebase  from './firebase/config';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Signup from './components/Signup/Signup';
 import {BrowserRouter as Router,Route, Routes} from 'react-router-dom';
+import Login from './components/login/Login';
 
 function App() {
   const [toDos, setTodos]= useState([])
@@ -17,6 +18,8 @@ function App() {
       <Routes>
       <Route path="/" element={<TodoList />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
+
          </Routes>
          
 

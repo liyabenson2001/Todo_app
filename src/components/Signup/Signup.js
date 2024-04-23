@@ -3,26 +3,48 @@ import React, { useState, useContext } from 'react';
 
 import './Signup.css';
 import { FirebaseContext } from '../../store/FirebaseContext';
-import Firebase from '../../firebase/config';
+//import {useHistory} from 'react-router-dom';
+import firebaseApp from '../../firebase/config';
+//import Firebase from '../../firebase/config';
 
 
 
 export default function Signup() {
+   // const history = useHistory()
     const [Username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const {firebase} = useContext(FirebaseContext);
+    const firebaseApp = useContext(FirebaseContext);
+
+   
 
     const handleSubmit = (e)=>{
-        e.preventDefault()
-        firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
-            result.user.updateProfile({displayName:Username})
-        })
-       
-      };
-    
+        e.preventDefault();
+        firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+            return result.user.updateProfile({
+                displayName: Username
+            // }).then(()=>{
+            //   firebaseApp.firestore().collection('users').add({
+            //     id: result.Username,
+            //     username: Username,
+            //     phone:phone
 
+            //   }).then(()=>{
+            //     history.push('/login')
+            //   })
+
+
+            })
+        })
+        .then(() => {
+            console.log('User display name updated successfully.');
+        })
+        .catch((error) => {
+            console.error('Error creating user:', error.message);
+        });
+};
   return (
     <div>
       <div className="signupParentDiv">
